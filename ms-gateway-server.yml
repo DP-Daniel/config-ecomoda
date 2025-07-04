@@ -28,12 +28,12 @@ spring:
               filters:
                 - AuthFilter
     
-            - id: bc-customer-service
-              uri: lb://bc-customer-service
+            - id: ms-cliente-service
+              uri: lb://ms-cliente-service
               predicates:
                 - Path=/cliente/**
-              filters:
-                - AuthFilter
+              #filters:
+                #- AuthFilter
     
             - id: bc-inventory-service
               uri: lb://bc-inventory-service
