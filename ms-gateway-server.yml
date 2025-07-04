@@ -42,8 +42,8 @@ spring:
               filters:
                 - AuthFilter
               
-            - id: bc-auth-service
-              uri: lb://bc-auth-service
+            - id: ms-auth-service
+              uri: lb://ms-auth-service
               predicates:
                 - Path=/auth/**
           
