@@ -1,0 +1,66 @@
+server:
+  port: 7999
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:7070/eureka}
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: bc-sales-service
+              uri: lb://bc-sales-service
+              predicates:
+                - Path=/venta/**, /detalleventa/**
+              filters:
+                - AuthFilter
+          
+            - id: bc-salesrules-service
+              uri: lb://bc-salesrules-service
+              predicates:
+                - Path=/formapago/**, /tipoventa/**
+              filters:
+                - AuthFilter
+    
+            - id: bc-customer-service
+              uri: lb://bc-customer-service
+              predicates:
+                - Path=/cliente/**
+              filters:
+                - AuthFilter
+    
+            - id: bc-inventory-service
+              uri: lb://bc-inventory-service
+              predicates:
+                - Path=/categoria/**, /producto/**
+              filters:
+                - AuthFilter
+              
+            - id: bc-auth-service
+              uri: lb://bc-auth-service
+              predicates:
+                - Path=/auth/**
+          
+          # Configuración CORS (DEBE estar dentro de server.webflux)
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/**]':
+                allowed-origins:  # Usar guión (snake_case)
+                  - "https://worcester-passed-stomach-laws.trycloudflare.com"
+                  - "http://localhost:4200"
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowed-headers: "*"
+                allow-credentials: true
+                max-age: 3600
