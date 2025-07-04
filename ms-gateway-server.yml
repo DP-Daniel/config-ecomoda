@@ -35,12 +35,12 @@ spring:
               #filters:
                 #- AuthFilter
     
-            - id: bc-inventory-service
-              uri: lb://bc-inventory-service
+            - id: ms-producto-service
+              uri: lb://ms-producto-service
               predicates:
-                - Path=/categoria/**, /producto/**
-              filters:
-                - AuthFilter
+                - Path=/producto/**, /marca/**, /genero/**, /color/**
+              #filters:
+                #- AuthFilter
               
             - id: ms-auth-service
               uri: lb://ms-auth-service
