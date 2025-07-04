@@ -1,10 +1,10 @@
 server:
-  port: 7999
+  port: 2999
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:7070/eureka}
+      defaultZone: ${EUREKA_URI:http://localhost:2020/eureka}
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
@@ -47,13 +47,12 @@ spring:
               predicates:
                 - Path=/auth/**
           
-          # Configuración CORS (DEBE estar dentro de server.webflux)
+
           globalcors:
             add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowed-origins:  # Usar guión (snake_case)
-                  - "https://worcester-passed-stomach-laws.trycloudflare.com"
+                allowed-origins:
                   - "http://localhost:4200"
                 allowed-methods:
                   - GET
