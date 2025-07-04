@@ -14,20 +14,13 @@ spring:
       server:
         webflux:
           routes:
-            - id: bc-sales-service
-              uri: lb://bc-sales-service
+            - id: ms-venta-service
+              uri: lb://ms-venta-service
               predicates:
-                - Path=/venta/**, /detalleventa/**
-              filters:
-                - AuthFilter
+                - Path=/venta/**, /detalleventa/**, /tipoventa/**, /formapago/**
+              #filters:
+                #- AuthFilter
           
-            - id: bc-salesrules-service
-              uri: lb://bc-salesrules-service
-              predicates:
-                - Path=/formapago/**, /tipoventa/**
-              filters:
-                - AuthFilter
-    
             - id: ms-cliente-service
               uri: lb://ms-cliente-service
               predicates:
@@ -52,8 +45,7 @@ spring:
             add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowed-origins:  # Usar guión (snake_case)
-                  - "https://worcester-passed-stomach-laws.trycloudflare.com"
+                allowed-origins:
                   - "http://localhost:4200"
                 allowed-methods:
                   - GET
